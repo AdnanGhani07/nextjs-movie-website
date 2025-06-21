@@ -57,15 +57,15 @@ export async function POST(req) {
   console.log('Webhook body:', body);
 
   if(eventType === 'user.created') {
-    console.log('User created');
+    console.log('User Created');
   }
 
   if(eventType === 'user.updated') {
-    console.log('User updated');
+    console.log('User Updated');
   }
 
   if(eventType === 'user.deleted') {
-    console.log('User deleted');
+    console.log('User Deleted');
   }
 
 //   if (eventType === 'user.created' || eventType === 'user.updated') {
