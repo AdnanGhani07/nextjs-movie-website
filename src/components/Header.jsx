@@ -1,5 +1,6 @@
 import Link from "next/link";
 import DarkModeSwitch from "./DarkModeSwitch";
+import NavDropDown from "./NavDropDown";
 import ThemeLogo from "./ThemeLogo";
 import { SignedIn, SignedOut, UserButton } from "@clerk/nextjs";
 export default function Header() {
@@ -18,6 +19,7 @@ export default function Header() {
         <li className="hidden sm:block hover:text-blue-500">
           <Link href={"/about"}>About</Link>
         </li>
+        <NavDropDown/>
         <SignedIn>
           <UserButton/>
         </SignedIn>
