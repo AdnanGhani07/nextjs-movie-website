@@ -4,10 +4,22 @@
 // export default nextConfig;
 
 /** @type {import('next').NextConfig} */
+// next.config.js
+
+/** @type {import('next').NextConfig} */
 const nextConfig = {
   images: {
-    domains: ["images.unsplash.com"], // Add other domains if needed
+    remotePatterns: [
+      {
+        protocol: 'https',
+        hostname: 'm.media-amazon.com',
+        port: '',
+        pathname: '/images/**',
+      },
+    ],
   },
 };
 
 export default nextConfig;
+
+

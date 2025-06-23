@@ -24,7 +24,7 @@ export default function RootLayout({ children }) {
   return (
     <ClerkProvider>
       <html lang="en" suppressHydrationWarning>
-        <body>
+        <body className="bg-neutral-100 dark:bg-[#121212]">
           <ThemeCom>
             <Header />
             <Navbar/>
