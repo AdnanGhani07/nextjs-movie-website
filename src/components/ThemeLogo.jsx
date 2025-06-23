@@ -23,7 +23,7 @@ export default function ThemeLogo() {
         alt="logo"
         width={90}
         height={90}
-        className="rounded-full shadow-md hover:shadow-gray-400 dark:hover:shadow-gray-800 cursor-pointer"
+        className="rounded-full shadow-md hover:shadow-gray-400 dark:hover:shadow-gray-800 cursor-pointer border border-gray-500 dark:border-gray-700"
       />
     </Link>
   );
