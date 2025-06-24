@@ -32,9 +32,9 @@ export default async function Home({ searchParams }) {
         totalPages={totalPages}
         genre="top_rated"
       />
-      <h1 className="text-3xl font-bold text-center my-3">Anime</h1>
+      <h1 className="text-3xl font-bold text-center my-3 border-t-2 border-blue-500 pt-3">Anime</h1>
       <AnimeResults />
-      <h1 className="text-3xl font-bold text-center my-3">Manga</h1>
+      <h1 className="text-3xl font-bold text-center my-3 border-t-2 border-blue-500 pt-3">Manga</h1>
       <MangaResults />
     </div>
   );
