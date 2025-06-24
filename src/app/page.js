@@ -24,7 +24,7 @@ export default async function Home({ searchParams }) {
     const totalPages = data.total_pages;
 
   return (
-    <div className="bg-neutral-100 dark:bg-[#121212] pt-3">
+    <div className="bg-neutral-100 dark:bg-[#121212] pt-3 shadow-lg">
       <h1 className="text-3xl font-bold text-center ">Movies</h1>
       <Results
         results={results}
@@ -32,9 +32,9 @@ export default async function Home({ searchParams }) {
         totalPages={totalPages}
         genre="top_rated"
       />
-      <h1 className="text-3xl font-bold text-center my-3 border-t-2 border-blue-500 pt-3">Anime</h1>
+      <h1 className="text-3xl font-bold text-center my-3 border-t-2 border-blue-500 pt-3 shadow-lg">Anime</h1>
       <AnimeResults />
-      <h1 className="text-3xl font-bold text-center my-3 border-t-2 border-blue-500 pt-3">Manga</h1>
+      <h1 className="text-3xl font-bold text-center my-3 border-t-2 border-blue-500 pt-3 shadow-lg">Manga</h1>
       <MangaResults />
     </div>
   );
