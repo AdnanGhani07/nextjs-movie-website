@@ -13,7 +13,6 @@ export default function AnimeNavbar() {
       <AnimeNavbarItem title="Popular Anime" path="/anime/top/popular" />
       <AnimeNavbarItem title="Top Manga" path="/manga/top/top" />
       <AnimeNavbarItem title="New Manga" path="/manga/top/new" />
-      <AnimeNavbarItem title="Popular Manga" path="/manga/top/popular" />
     </div>
   );
 }
