@@ -25,7 +25,7 @@ export default async function Home({ searchParams }) {
 
   return (
     <div className="bg-neutral-100 dark:bg-[#121212]">
-      <h1 className="text-3xl font-bold text-center my-3">Movies</h1>
+      <h1 className="text-3xl font-bold text-center ">Movies</h1>
       <Results
         results={results}
         currentPage={page}
@@ -40,6 +40,6 @@ export default async function Home({ searchParams }) {
   );
   } catch (error) {
     console.error("Fetch failed:", error);
-    return <div className="text-red-500 text-center mt-10">Error loading data. Please try again later.</div>;
+    return <div className="text-red-500 text-center mt-10 bg-neutral-100 dark:bg-[#121212]">Error loading data. Please try again later.</div>;
   }
 }

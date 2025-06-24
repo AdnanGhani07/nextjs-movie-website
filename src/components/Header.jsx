@@ -6,7 +6,7 @@ import { SignedIn, SignedOut, UserButton } from "@clerk/nextjs";
 
 export default function Header() {
   return (
-    <header className="bg-neutral-100 dark:bg-[#121212] text-black dark:text-white shadow-md">
+    <header className="bg-neutral-100 dark:bg-[#121212] text-black dark:text-white shadow-md border-t-2 border-r-2 border-l-2 border-blue-500 dark:border-blue-400 border-opacity-80 rounded-b-lg rounded-r-lg rounded-l-lg">
       <div className="flex justify-between items-center px-4 py-3 max-w-6xl mx-auto">
         {/* Logo */}
         <div>

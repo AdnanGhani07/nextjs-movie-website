@@ -13,9 +13,9 @@ export default function NavbarItem({ title, param }) {
     <div>
       <Link
         href={`/movie/top/${param}`}
-        className={`font-semibold transition-colors duration-200 hover:text-red-500 dark:hover:text-red-400 ${
+        className={`font-semibold transition-colors duration-200 hover:text-blue-500 dark:hover:text-blue-400 ${
           isActive
-            ? 'underline underline-offset-8 decoration-4 decoration-red-500 dark:decoration-red-400'
+            ? 'underline underline-offset-8 decoration-4 decoration-blue-500 dark:decoration-blue-400'
             : 'text-gray-700 dark:text-gray-300'
         }`}
       >
