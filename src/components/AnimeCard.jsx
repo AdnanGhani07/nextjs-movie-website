@@ -1,38 +1,41 @@
 "use client";
 import Image from "next/image";
 import Link from "next/link";
+import { FiThumbsUp } from "react-icons/fi";
 
 export default function AnimeCard({ item, type = "anime" }) {
-  const title =
-    type === "anime" ? item.title : item.title_english || item.title;
-  const imageUrl = item.images?.webp?.image_url || "";
+  const title = item.title_english || item.title || "Untitled";
+  const imageUrl = item.images?.webp?.large_image_url || item.images?.webp?.image_url;
+  const synopsis = item.synopsis || "No description available.";
   const score = item.score || "N/A";
   const startDate = item.aired?.from || item.published?.from || "Unknown";
+  const voteCount = item.scored_by || 0;
 
   return (
-    <div className="bg-white dark:bg-gray-900 rounded-lg shadow-md overflow-hidden hover:shadow-lg transition-shadow duration-300 max-w-xs">
+    <div className="group cursor-pointer sm:hover:shadow-slate-400 sm:shadow-md rounded-lg sm:border sm:border-slate-400 sm:m-2 transition-shadow duration-200 w-full max-w-xs">
       <Link href={`/${type}/${item.mal_id}`}>
-        <div className="relative w-full h-64 bg-white dark:bg-gray-800">
+        {/* Image Section */}
+        <div className="relative w-full h-36">
           <Image
             src={imageUrl}
             alt={title}
             fill
-            style={{ objectFit: "contain" }}
-            className="rounded-t-lg"
-            sizes="(max-width: 768px) 100vw, 33vw"
+            className="sm:rounded-t-lg object-cover group-hover:opacity-75 transition-opacity duration-300"
+            sizes="100%"
             priority
           />
         </div>
 
-        <div className="p-3">
-          <h3 className="text-md font-semibold text-gray-800 dark:text-white line-clamp-2">
+        {/* Info Section */}
+        <div className="p-2">
+          <p className="line-clamp-3 text-sm text-gray-700 dark:text-gray-300">{synopsis}</p>
+          <h2 className="font-bold truncate my-2 text-md text-gray-900 dark:text-white">
             {title}
-          </h3>
-          <p className="text-sm text-gray-500 dark:text-gray-400">
-            <strong>Score:</strong> {score}
-          </p>
-          <p className="text-sm text-gray-500 dark:text-gray-400">
-            <strong>Start:</strong> {startDate?.slice(0, 10)}
+          </h2>
+          <p className="flex items-center text-xs text-gray-600 dark:text-gray-400">
+            {startDate?.slice(0, 10)}
+            <FiThumbsUp className="h-5 mr-1 ml-3" />
+            {voteCount}
           </p>
         </div>
       </Link>
