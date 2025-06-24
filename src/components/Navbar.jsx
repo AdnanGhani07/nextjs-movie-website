@@ -9,8 +9,8 @@ export default function Navbar() {
       text-gray-800 dark:text-white 
       transition-colors duration-300"
     >
-      <NavbarItem title="Trending" param="trending" />
-      <NavbarItem title="Upcoming" param="upcoming" />
+      <NavbarItem title="Trending Movies" param="trending" />
+      <NavbarItem title="Upcoming Movies" param="upcoming" />
       <NavbarItem title="TV Shows" param="tv-shows" />
     </div>
   );
