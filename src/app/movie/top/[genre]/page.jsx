@@ -20,14 +20,21 @@ export default async function Home({ params }) {
   }
  
 
-  const res = await fetch(uri, {
-    cache: 'no-store',
-  });
-
-  console.log(res.status);
-  if (!res.ok) throw new Error('Failed to fetch data from TMDB');
-
-  const data = await res.json();
+  try {
+    const res = await fetch(uri, { cache: 'no-store' });
+  
+    if (!res.ok) {
+      throw new Error(`Failed to fetch: ${res.status}`);
+    }
+  
+    const data = await res.json();
+    // continue using `data`
+  
+  } catch (error) {
+    console.error("Fetch failed:", error);
+    return <div className="text-red-500 text-center mt-10">Error loading data. Please try again later.</div>;
+  }
+  
   const results = data.results;
 
   return (

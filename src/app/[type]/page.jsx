@@ -1,6 +1,6 @@
 
 export default function page() {
   return (
-    <div>Movie page</div>
+    <div>Anime page</div>
   )
 }

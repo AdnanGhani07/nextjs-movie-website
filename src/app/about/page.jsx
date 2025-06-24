@@ -8,11 +8,11 @@ export default function About() {
             </h1>
             <div className='text-md text-gray-700 dark:text-gray-300 flex flex-col gap-6'>
               <p>
-                Welcome to CinePulse! This app is designed to provide users with a comprehensive database of movies, TV shows, and entertainment content. Our goal is to offer a seamless and enjoyable experience for movie enthusiasts and casual viewers alike.
+                Welcome to CinePulse! This app is designed to provide users with a comprehensive database of movies, animes, TV shows, and entertainment content. Our goal is to offer a seamless and enjoyable experience for movie enthusiasts and casual viewers alike.
               </p>
   
               <p>
-                On CinePulse, you&apos;ll find detailed information about your favorite movies and TV shows, including cast and crew details, plot summaries, user reviews, and ratings. We strive to keep our database up-to-date with the latest releases and trending content.
+                On CinePulse, you&apos;ll find detailed information about your favorite movies, animes and TV shows, including cast and crew details, plot summaries, user reviews, and ratings. We strive to keep our database up-to-date with the latest releases and trending content.
               </p>
   
               <p>

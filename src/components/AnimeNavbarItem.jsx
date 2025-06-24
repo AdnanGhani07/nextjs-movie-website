@@ -3,16 +3,15 @@
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 
-export default function NavbarItem({ title, param }) {
+export default function AnimeNavbarItem({ title, path }) {
   const pathname = usePathname();
-  const genre = pathname.split('/')[2];
 
-  const isActive = genre === param;
+  const isActive = pathname.startsWith(path);
 
   return (
     <div>
       <Link
-        href={`/movie/top/${param}`}
+        href={path}
         className={`font-semibold transition-colors duration-200 hover:text-red-500 dark:hover:text-red-400 ${
           isActive
             ? 'underline underline-offset-8 decoration-4 decoration-red-500 dark:decoration-red-400'
