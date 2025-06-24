@@ -24,7 +24,7 @@ export default async function Home({ searchParams }) {
     const totalPages = data.total_pages;
 
   return (
-    <div className="bg-neutral-100 dark:bg-[#121212]">
+    <div className="bg-neutral-100 dark:bg-[#121212] pt-3">
       <h1 className="text-3xl font-bold text-center ">Movies</h1>
       <Results
         results={results}
