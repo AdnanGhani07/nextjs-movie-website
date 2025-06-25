@@ -12,7 +12,7 @@ export default function AnimeCard({ item, type = "anime" }) {
   const voteCount = item.scored_by || 0;
 
   return (
-    <div className="group cursor-pointer sm:hover:shadow-slate-400 sm:shadow-md rounded-lg sm:border sm:border-slate-400 sm:m-2 transition-shadow duration-200 w-full max-w-xs">
+    <div className="group cursor-pointer sm:hover:shadow-purple-500 sm:shadow-md rounded-lg sm:border sm:border-purple-500 sm:m-2 transition-shadow duration-200 w-full max-w-xs">
       <Link href={`/${type}/${item.mal_id}`}>
         {/* Image Section */}
         <div className="relative w-full h-36">

@@ -44,8 +44,8 @@ export default async function Home({ searchParams }) {
           <AnimeResults />
         </section>
 
-        <section className="mb-12 border-t border-green-500 pt-10">
-          <h1 className="text-4xl font-bold text-center text-green-600 dark:text-green-400 mb-6">
+        <section className="mb-12 border-t border-blue-500 pt-10">
+          <h1 className="text-4xl font-bold text-center text-purple-600 dark:text-purple-400 mb-6">
             📚 Trending Manga
           </h1>
           <MangaResults />
