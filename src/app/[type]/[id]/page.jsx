@@ -5,6 +5,7 @@ import { Suspense } from "react";
 
 // Lazy-load the client component for trailer modal (No SSR)
 const TrailerButton = dynamic(() => import("@/components/TrailerButton"));
+const CharacterModal = dynamic(() => import("@/components/CharacterModal"));
 
 export default async function ContentPage({ params }) {
   const { id, type } = await params;
@@ -16,13 +17,20 @@ export default async function ContentPage({ params }) {
 
   const res = await fetch(baseUrl, { cache: "no-store" });
 
+  const characterUrl = `https://api.jikan.moe/v4/${type}/${id}/characters`;
+  const characterRes = await fetch(characterUrl, { cache: "no-store" });
+  const characterData = characterRes.ok ? await characterRes.json() : { data: [] };
+  const characters = characterData.data;
+
+
   if (!res.ok) throw new Error(`Failed to fetch ${type} details`);
 
   const data = await res.json();
   const item = data.data;
 
   const title = item.title_english || item.title;
-  const imageUrl = item.images?.webp?.large_image_url || item.images?.webp?.image_url;
+  const imageUrl =
+    item.images?.webp?.large_image_url || item.images?.webp?.image_url;
   const score = item.score || "N/A";
   const genres = item.genres.map((g) => g.name).join(", ");
   const synopsis = item.synopsis || "No synopsis available.";
@@ -54,18 +62,41 @@ export default async function ContentPage({ params }) {
         {/* Info */}
         <div className="flex-1 p-6 space-y-3 dark:text-white text-gray-800">
           <ul className="space-y-1 text-sm">
-            <li><strong>Score:</strong> {score} ({item.scored_by || "N/A"} votes)</li>
-            <li><strong>{isAnime ? "Episodes" : "Chapters"}:</strong> {chapters}</li>
-            <li><strong>Status:</strong> {status}</li>
-            <li><strong>Type:</strong> {item.type}</li>
-            <li><strong>Source:</strong> {source}</li>
-            <li><strong>Genres:</strong> {genres}</li>
+            <li>
+              <strong>Score:</strong> {score} ({item.scored_by || "N/A"} votes)
+            </li>
+            <li>
+              <strong>{isAnime ? "Episodes" : "Chapters"}:</strong> {chapters}
+            </li>
+            <li>
+              <strong>Status:</strong> {status}
+            </li>
+            <li>
+              <strong>Type:</strong> {item.type}
+            </li>
+            <li>
+              <strong>Source:</strong> {source}
+            </li>
+            <li>
+              <strong>Genres:</strong> {genres}
+            </li>
           </ul>
 
           {/* Trailer Button */}
           {isAnime && trailer && (
             <Suspense fallback={null}>
               <TrailerButton trailerUrl={trailer} />
+            </Suspense>
+          )}
+
+          <span className="gap-2">
+            <br />
+          </span>
+
+          {/* Character Modal */}
+          {characters.length > 0 && (
+            <Suspense fallback={null}>
+              <CharacterModal characters={characters} />
             </Suspense>
           )}
         </div>
