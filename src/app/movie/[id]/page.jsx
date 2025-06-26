@@ -41,7 +41,7 @@ export default async function MovieContentPage({ params }) {
         <div className="flex-1 space-y-3 p-4">
           <p><strong>Release Date:</strong> {movie.release_date}</p>
           <p><strong>Runtime:</strong> {movie.runtime} min</p>
-          <p><strong>Genres:</strong> {movie.genres?.map(g => g.name).join(", ")}</p>
+          <p><strong>Genres:</strong> {movie.genres?.map(g => g.name).join(", ") || "N/A"}</p>
           <p><strong>Rating:</strong> {movie.vote_average} ({movie.vote_count} votes)</p>
           <p><strong>Status:</strong> {movie.status}</p>
           <p><strong>Language:</strong> {movie.original_language?.toUpperCase()}</p>
