@@ -1,19 +1,22 @@
+// app/[type]/[id]/page.jsx
 import Image from "next/image";
-import Link from "next/link";
+import dynamic from "next/dynamic";
+import { Suspense } from "react";
+
+// Lazy-load the client component for trailer modal (No SSR)
+const TrailerButton = dynamic(() => import("@/components/TrailerButton"));
 
 export default async function ContentPage({ params }) {
   const { id, type } = await params;
-
   const isAnime = type === "anime";
+
   const baseUrl = isAnime
     ? `https://api.jikan.moe/v4/anime/${id}/full`
     : `https://api.jikan.moe/v4/manga/${id}/full`;
 
-  const res = await fetch(baseUrl);
+  const res = await fetch(baseUrl, { cache: "no-store" });
 
-  if (!res.ok) {
-    throw new Error(`Failed to fetch ${type} details`);
-  }
+  if (!res.ok) throw new Error(`Failed to fetch ${type} details`);
 
   const data = await res.json();
   const item = data.data;
@@ -35,10 +38,10 @@ export default async function ContentPage({ params }) {
         {title}
       </h1>
 
-      {/* Card */}
-      <div className="flex flex-col md:flex-row shadow-lg rounded-xl overflow-hidden border-2 border-blue-500">
+      {/* Details Card */}
+      <div className="flex flex-col md:flex-row shadow-xl border border-blue-500/50 rounded-xl overflow-hidden">
         {/* Image */}
-        <div className="relative w-full md:w-1/3 h-[450px]">
+        <div className="relative w-full md:w-1/3 h-[450px] bg-white dark:bg-gray-900">
           <Image
             src={imageUrl}
             alt={title}
@@ -48,49 +51,28 @@ export default async function ContentPage({ params }) {
           />
         </div>
 
-        {/* Info Section */}
-        <div className="p-6 flex-1 space-y-4 rounded-xl">
-          <ul className="text-sm text-gray-700 dark:text-gray-300 space-y-1">
-            <li>
-              <span className="font-medium text-gray-900 dark:text-white">Score:</span>{" "}
-              {score} ({item.scored_by || "N/A"} votes)
-            </li>
-            <li>
-              <span className="font-medium text-gray-900 dark:text-white">
-                {isAnime ? "Episodes" : "Chapters"}:
-              </span>{" "}
-              {chapters}
-            </li>
-            <li>
-              <span className="font-medium text-gray-900 dark:text-white">Status:</span> {status}
-            </li>
-            <li>
-              <span className="font-medium text-gray-900 dark:text-white">Type:</span> {item.type}
-            </li>
-            <li>
-              <span className="font-medium text-gray-900 dark:text-white">Source:</span> {source}
-            </li>
-            <li>
-              <span className="font-medium text-gray-900 dark:text-white">Genres:</span> {genres}
-            </li>
+        {/* Info */}
+        <div className="flex-1 p-6 space-y-3 dark:text-white text-gray-800">
+          <ul className="space-y-1 text-sm">
+            <li><strong>Score:</strong> {score} ({item.scored_by || "N/A"} votes)</li>
+            <li><strong>{isAnime ? "Episodes" : "Chapters"}:</strong> {chapters}</li>
+            <li><strong>Status:</strong> {status}</li>
+            <li><strong>Type:</strong> {item.type}</li>
+            <li><strong>Source:</strong> {source}</li>
+            <li><strong>Genres:</strong> {genres}</li>
           </ul>
 
           {/* Trailer Button */}
           {isAnime && trailer && (
-            <Link
-              href={trailer}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-block mt-4 px-4 py-2 text-white bg-blue-600 hover:bg-blue-700 rounded-xl transition"
-            >
-              ▶ Watch Trailer
-            </Link>
+            <Suspense fallback={null}>
+              <TrailerButton trailerUrl={trailer} />
+            </Suspense>
           )}
         </div>
       </div>
 
-      {/* Synopsis */}
-      <div className="mt-10 rounded-xl shadow-md p-6 border-2 border-blue-500">
+      {/* Synopsis Section */}
+      <div className="mt-10 rounded-xl shadow-md p-6 border border-blue-500/40 bg-white dark:bg-gray-900">
         <h2 className="text-2xl font-semibold text-gray-900 dark:text-white mb-3">
           Synopsis
         </h2>
