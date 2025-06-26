@@ -1,5 +1,6 @@
 // app/movie/[id]/page.jsx
 import Image from "next/image";
+import VideoModal from "@/components/VideoModal"; // import the modal
 
 const API_KEY = process.env.API_KEY;
 
@@ -13,9 +14,7 @@ export default async function MovieContentPage({ params }) {
     `https://api.themoviedb.org/3/movie/${id}/videos?api_key=${API_KEY}&language=en-US`
   );
 
-  if (!movieRes.ok || !videoRes.ok) {
-    throw new Error("Failed to fetch movie details or trailer.");
-  }
+  if (!movieRes.ok || !videoRes.ok) throw new Error("Failed to fetch movie or trailer");
 
   const movie = await movieRes.json();
   const videos = await videoRes.json();
@@ -38,7 +37,7 @@ export default async function MovieContentPage({ params }) {
           />
         </div>
 
-        <div className="flex-1 space-y-3 p-4">
+        <div className="flex-1 space-y-4 p-4">
           <p><strong>Release Date:</strong> {movie.release_date}</p>
           <p><strong>Runtime:</strong> {movie.runtime} min</p>
           <p><strong>Genres:</strong> {movie.genres?.map(g => g.name).join(", ") || "N/A"}</p>
@@ -46,17 +45,9 @@ export default async function MovieContentPage({ params }) {
           <p><strong>Status:</strong> {movie.status}</p>
           <p><strong>Language:</strong> {movie.original_language?.toUpperCase()}</p>
 
+          {/* Modal Button */}
           {trailer && (
-            <div className="mt-4">
-              <iframe
-                width="100%"
-                height="315"
-                src={`https://www.youtube.com/embed/${trailer.key}`}
-                title={trailer.name}
-                allowFullScreen
-                className="rounded-lg border-2 border-blue-500"
-              />
-            </div>
+            <VideoModal trailerKey={trailer.key} title={movie.title} />
           )}
         </div>
       </div>
