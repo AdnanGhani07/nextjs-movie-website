@@ -1,6 +1,6 @@
 // app/movie/[id]/page.jsx
 import Image from "next/image";
-import VideoModal from "@/components/VideoModal"; // import the modal
+import MovieModal from "@/components/MovieModal"; // import the modal
 
 const API_KEY = process.env.API_KEY;
 
@@ -47,7 +47,7 @@ export default async function MovieContentPage({ params }) {
 
           {/* Modal Button */}
           {trailer && (
-            <VideoModal trailerKey={trailer.key} title={movie.title} />
+            <MovieModal trailerKey={trailer.key} title={movie.title} />
           )}
         </div>
       </div>
