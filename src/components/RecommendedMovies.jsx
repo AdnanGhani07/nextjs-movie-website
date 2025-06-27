@@ -1,8 +1,8 @@
 import Link from "next/link";
 import Image from "next/image";
 
-export default function RecommendedMovies({ results }) {
-  if (!results || results.length === 0) {
+export default function RecommendedMovies({ movies }) {
+  if (!movies || movies.length === 0) {
     return (
       <div className="mt-10">
         <p className="text-gray-500 dark:text-gray-400">
@@ -17,7 +17,7 @@ export default function RecommendedMovies({ results }) {
         Recommended Movies
       </h2>
       <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4">
-        {results.map((movie) => (
+        {movies.map((movie) => (
           <Link href={`/movie/${movie.id}`} key={movie.id}>
             <div className="bg-white dark:bg-gray-800 rounded-lg shadow hover:shadow-lg transition p-2">
               <div className="relative w-full h-60">

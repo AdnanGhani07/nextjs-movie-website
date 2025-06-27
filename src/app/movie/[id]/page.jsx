@@ -28,8 +28,6 @@ export default async function MovieContentPage({ params }) {
     ),
   ]);
 
-  console.log(movieRes, videoRes, creditsRes, recsRes);
-
   if (!movieRes.ok || !videoRes.ok || !creditsRes.ok || !recsRes.ok)
     throw new Error("Failed to fetch movie details");
 
@@ -37,11 +35,6 @@ export default async function MovieContentPage({ params }) {
   const videos = await videoRes.json();
   const credits = await creditsRes.json();
   const recs = await recsRes.json();
-
-  console.log("movie.genres", movie.genres);
-  console.log("credits.cast", credits.cast);
-  console.log("recs.results", recs.results);
-
   const trailer = videos.results.find(
     (v) => v.type === "Trailer" && v.site === "YouTube"
   );
