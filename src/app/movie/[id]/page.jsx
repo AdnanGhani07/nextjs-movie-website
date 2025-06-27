@@ -98,18 +98,28 @@ export default async function MovieContentPage({ params }) {
       {/* 👥 Cast Overlay */}
       <div className="mt-10">
         <h2 className="text-2xl font-bold mb-4 text-blue-600">Cast</h2>
-        <MovieCastOverlay cast={credits.cast} />
+        {Array.isArray(credits.cast) && credits.cast.length > 0 ? (
+          <MovieCastOverlay cast={credits.cast} />
+        ) : (
+          <p className="text-gray-500 dark:text-gray-400">
+            No cast information available.
+          </p>
+        )}
       </div>
 
       {/* 🎞️ Recommendations */}
-      {recs.results.length > 0 && (
-        <div className="mt-10">
-          <h2 className="text-2xl font-bold mb-4 text-blue-600">
-            Recommended Movies
-          </h2>
-          <RecommendedMovies movies={recs.results} />
-        </div>
-      )}
+      <div className="mt-10">
+        <h2 className="text-2xl font-bold mb-4 text-blue-600">
+          Recommended Movies
+        </h2>
+        {Array.isArray(recs.results) && recs.results.length > 0 ? (
+          <RecommendedMovies movies={recs.results.slice(0, 10)} />
+        ) : (
+          <p className="text-gray-500 dark:text-gray-400">
+            No recommendations available.
+          </p>
+        )}
+      </div>
     </div>
   );
 }
