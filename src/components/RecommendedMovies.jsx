@@ -13,9 +13,6 @@ export default function RecommendedMovies({ movies }) {
   }
   return (
     <div className="mt-10">
-      <h2 className="text-2xl font-semibold mb-4 text-blue-600 dark:text-blue-400">
-        Recommended Movies
-      </h2>
       <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4">
         {movies.map((movie) => (
           <Link href={`/movie/${movie.id}`} key={movie.id}>
