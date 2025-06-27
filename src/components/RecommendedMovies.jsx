@@ -2,8 +2,6 @@ import Link from "next/link";
 import Image from "next/image";
 
 export default function RecommendedMovies({ recommendations }) {
-  if (!recommendations || recommendations.length === 0) return null;
-
   return (
     <div className="mt-10">
       <h2 className="text-2xl font-semibold mb-4 text-blue-600 dark:text-blue-400">

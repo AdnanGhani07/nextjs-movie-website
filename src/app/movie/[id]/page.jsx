@@ -69,10 +69,12 @@ export default async function MovieContentPage({ params }) {
       </div>
 
       {/* 🎞️ Recommendations */}
-      <div className="mt-10">
-        <h2 className="text-2xl font-bold mb-4 text-blue-600">Recommended Movies</h2>
-        <RecommendedMovies movies={recs.results.slice(0, 10)} />
-      </div>
+      {recs.results.length > 0 && (
+        <div className="mt-10">
+          <h2 className="text-2xl font-bold mb-4 text-blue-600">Recommended Movies</h2>
+          <RecommendedMovies movies={recs.results} />
+        </div>
+      )}
     </div>
   );
 }
