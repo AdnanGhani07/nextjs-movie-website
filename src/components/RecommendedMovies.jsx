@@ -2,6 +2,15 @@ import Link from "next/link";
 import Image from "next/image";
 
 export default function RecommendedMovies({ results }) {
+  if (!results || results.length === 0) {
+    return (
+      <div className="mt-10">
+        <p className="text-gray-500 dark:text-gray-400">
+          No recommended movies available.
+        </p>
+      </div>
+    );
+  }
   return (
     <div className="mt-10">
       <h2 className="text-2xl font-semibold mb-4 text-blue-600 dark:text-blue-400">

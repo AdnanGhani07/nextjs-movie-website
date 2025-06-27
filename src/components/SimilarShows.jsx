@@ -2,6 +2,15 @@ import Link from "next/link";
 import Image from "next/image";
 
 export default function SimilarShows({ results }) {
+  if (!results || results.length === 0) {
+    return (
+      <div className="mt-10">
+        <p className="text-gray-500 dark:text-gray-400">
+          No similar shows available.
+        </p>
+      </div>
+    );
+  }
   return (
     <div className="grid sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4">
       {results.map(show => (
