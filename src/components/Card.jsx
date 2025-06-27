@@ -6,7 +6,7 @@ export default function Card({ result }) {
   const routePath = `/${mediaType}/${result.id}`;
   return (
     <div className='group cursor-pointer sm:hover:shadow-blue-400 sm:shadow-md rounded-lg sm:border sm:border-blue-400 sm:m-2 transition-shadow duration-200'>
-      <Link href= {routePath}>
+      <Link href={routePath}>
         <img
           src={`https://image.tmdb.org/t/p/original/${
             result.backdrop_path || result.poster_path
