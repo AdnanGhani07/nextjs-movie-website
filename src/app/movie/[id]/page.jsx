@@ -6,7 +6,10 @@ import RecommendedMovies from "@/components/RecommendedMovies";
 const API_KEY = process.env.API_KEY;
 
 export default async function MovieContentPage({ params }) {
-  const { id } = params;
+  const { id } = await params;
+
+  console.log("Fetching movie from:", `https://api.themoviedb.org/3/movie/${id}?api_key=${API_KEY}`);
+
 
   const [movieRes, videoRes, creditsRes, recsRes] = await Promise.all([
     fetch(`https://api.themoviedb.org/3/movie/${id}?api_key=${API_KEY}&language=en-US`),
@@ -14,6 +17,8 @@ export default async function MovieContentPage({ params }) {
     fetch(`https://api.themoviedb.org/3/movie/${id}/credits?api_key=${API_KEY}&language=en-US`),
     fetch(`https://api.themoviedb.org/3/movie/${id}/recommendations?api_key=${API_KEY}&language=en-US&page=1`)
   ]);
+
+  console.log(movieRes, videoRes, creditsRes, recsRes);
 
   if (!movieRes.ok || !videoRes.ok || !creditsRes.ok || !recsRes.ok)
     throw new Error("Failed to fetch movie details");

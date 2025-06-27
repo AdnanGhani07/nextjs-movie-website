@@ -3,7 +3,7 @@ import { FiThumbsUp } from 'react-icons/fi';
 
 export default function Card({ result }) {
   const mediaType = result.media_type || (result.first_air_date ? 'tv' : 'movie');
-  const routePath = `/3/${mediaType}/${result.id}`;
+  const routePath = `/${mediaType}/${result.id}`;
   return (
     <div className='group cursor-pointer sm:hover:shadow-blue-400 sm:shadow-md rounded-lg sm:border sm:border-blue-400 sm:m-2 transition-shadow duration-200'>
       <Link href={routePath}>
