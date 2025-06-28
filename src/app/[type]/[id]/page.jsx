@@ -2,7 +2,7 @@
 import Image from "next/image";
 import dynamic from "next/dynamic";
 import { Suspense } from "react";
-import { fetchAniListData } from "@/lib/fetchAnilist";
+import { fetchAniListData } from "../../../lib/fetchAnilist";
 
 // Lazy-load the client component for trailer modal (No SSR)
 const TrailerButton = dynamic(() => import("@/components/TrailerButton"));
