@@ -26,7 +26,7 @@ export default async function Home({ searchParams }) {
     return (
       <div className="bg-neutral-100 dark:bg-[#121212] pt-6 px-4 sm:px-8 lg:px-16">
         <section className="mb-12">
-          <h1 className="text-4xl font-bold text-center text-blue-600 dark:text-blue-400 mb-6 tracking-tight">
+          <h1 className="text-4xl font-bold text-center text-blue-600 dark:text-pink-400 mb-6 tracking-tight">
             🎬 Top Rated Movies
           </h1>
           <Results
@@ -37,15 +37,15 @@ export default async function Home({ searchParams }) {
           />
         </section>
 
-        <section className="mb-12 border-t border-blue-500 pt-10">
-          <h1 className="text-4xl font-bold text-center text-purple-600 dark:text-purple-400 mb-6">
+        <section className="mb-12 border-t border-blue-500 dark:border-pink-500 pt-10">
+          <h1 className="text-4xl font-bold text-center text-blue-600 dark:text-pink-400 mb-6">
             🍥 Popular Anime
           </h1>
           <AnimeResults />
         </section>
 
-        <section className="mb-12 border-t border-blue-500 pt-10">
-          <h1 className="text-4xl font-bold text-center text-purple-600 dark:text-purple-400 mb-6">
+        <section className="mb-12 border-t border-blue-500 dark:border-pink-500 pt-10">
+          <h1 className="text-4xl font-bold text-center text-blue-600 dark:text-pink-400 mb-6">
             📚 Trending Manga
           </h1>
           <MangaResults />
