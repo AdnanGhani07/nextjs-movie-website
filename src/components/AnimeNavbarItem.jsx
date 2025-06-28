@@ -12,9 +12,9 @@ export default function AnimeNavbarItem({ title, path }) {
     <div>
       <Link
         href={path}
-        className={`font-semibold transition-colors duration-200 hover:text-blue-500 dark:hover:text-blue-400 ${
+        className={`font-semibold transition-colors duration-200 hover:text-blue-500 dark:hover:text-pink-400 ${
           isActive
-            ? 'underline underline-offset-8 decoration-4 decoration-blue-500 dark:decoration-blue-400'
+            ? 'underline underline-offset-8 decoration-4 decoration-blue-500 dark:decoration-pink-400'
             : 'text-gray-700 dark:text-gray-300'
         }`}
       >

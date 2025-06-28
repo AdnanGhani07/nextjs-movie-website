@@ -6,7 +6,7 @@ import { SignedIn, SignedOut, UserButton } from "@clerk/nextjs";
 
 export default function Header() {
   return (
-    <header className="bg-neutral-100 dark:bg-[#121212] text-black dark:text-white shadow-md border-t-2 border-r-2 border-l-2 border-blue-500 dark:border-blue-400 border-opacity-80 rounded-b-lg rounded-r-lg rounded-l-lg">
+    <header className="bg-neutral-100 dark:bg-[#121212] text-black dark:text-white shadow-md border-t-2 border-r-2 border-l-2 border-blue-600 dark:border-pink-500 border-opacity-80 rounded-b-lg rounded-r-lg rounded-l-lg">
       <div className="flex justify-between items-center px-4 py-3 max-w-6xl mx-auto">
         {/* Logo */}
         <div>
@@ -19,11 +19,11 @@ export default function Header() {
             <DarkModeSwitch />
           </li>
 
-          <li className="hidden sm:block hover:text-blue-600 dark:hover:text-blue-400 transition-colors">
+          <li className="hidden sm:block hover:text-blue-600 dark:hover:text-pink-400 transition-colors">
             <Link href="/">Home</Link>
           </li>
 
-          <li className="hidden sm:block hover:text-blue-600 dark:hover:text-blue-400 transition-colors">
+          <li className="hidden sm:block hover:text-blue-600 dark:hover:text-pink-400 transition-colors">
             <Link href="/about">About</Link>
           </li>
 
@@ -35,7 +35,7 @@ export default function Header() {
 
           <SignedOut>
             <Link
-              className="bg-gradient-to-r from-blue-500 via-indigo-600 to-sky-700 text-white px-4 py-2 rounded-lg hover:brightness-110 transition"
+              className="bg-gradient-to-r from-blue-500 via-indigo-600 to-sky-700 dark:from-pink-500 dark:via-pink-600 dark:to-pink-700 text-white px-4 py-2 rounded-lg hover:brightness-110 transition"
               href="/sign-in"
             >
               Sign in

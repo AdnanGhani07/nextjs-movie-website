@@ -9,7 +9,7 @@ export default function CharacterModal({ characters = [] }) {
     <>
       <button
         onClick={() => setIsOpen(true)}
-        className="mt-4 px-4 py-2 bg-indigo-600 text-white rounded-md hover:bg-indigo-700 transition"
+        className="mt-4 px-4 py-2 bg-indigo-600 text-white rounded-md hover:bg-indigo-700 dark:bg-pink-600 dark:hover:bg-pink-700 transition"
       >
         👥 View Characters
       </button>
@@ -31,7 +31,7 @@ export default function CharacterModal({ characters = [] }) {
               {characters.map((char) => (
                 <div
                   key={char.character.mal_id}
-                  className="bg-white dark:bg-gray-800 rounded-lg overflow-hidden border border-blue-500/50"
+                  className="bg-white dark:bg-gray-800 rounded-lg overflow-hidden border-2 border-blue-500 dark:border-2 dark:border-pink-500/50"
                 >
                   <div className="relative w-full h-40">
                     <Image

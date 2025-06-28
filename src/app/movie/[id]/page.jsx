@@ -41,11 +41,11 @@ export default async function MovieContentPage({ params }) {
 
   return (
     <div className="max-w-6xl mx-auto px-4 py-10">
-      <h1 className="text-4xl font-bold text-center text-blue-600 mb-6">
+      <h1 className="text-4xl font-bold text-center text-blue-600 dark:text-pink-500 mb-6">
         {movie.title}
       </h1>
 
-      <div className="flex flex-col md:flex-row gap-6 shadow-lg rounded-lg overflow-hidden border border-blue-400">
+      <div className="flex flex-col md:flex-row gap-6 shadow-lg rounded-lg overflow-hidden border border-blue-400 dark:border-pink-500">
         <div className="relative w-full md:w-1/3 h-[500px]">
           <Image
             src={`https://image.tmdb.org/t/p/w500${movie.poster_path}`}
@@ -87,14 +87,14 @@ export default async function MovieContentPage({ params }) {
         </div>
       </div>
 
-      <div className="mt-6 bg-white dark:bg-gray-900 rounded-lg shadow-md p-6">
-        <h2 className="text-xl font-semibold mb-2 text-blue-600">Overview</h2>
+      <div className="mt-6 bg-white dark:bg-gray-900 rounded-lg shadow-md p-6 border border-blue-400 dark:border-pink-500">
+        <h2 className="text-xl font-semibold mb-2 text-blue-600 dark:text-pink-500">Overview</h2>
         <p className="text-gray-800 dark:text-gray-200">{movie.overview}</p>
       </div>
 
       {/* 👥 Cast Overlay */}
       <div className="mt-10">
-        <h2 className="text-2xl font-bold mb-4 text-blue-600">Cast</h2>
+        <h2 className="text-2xl font-bold mb-4 text-blue-600 dark:text-pink-500">Cast</h2>
         {Array.isArray(credits.cast) && credits.cast.length > 0 ? (
           <MovieCastOverlay cast={credits.cast} />
         ) : (

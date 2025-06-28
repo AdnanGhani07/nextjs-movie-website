@@ -13,13 +13,13 @@ export default function RecommendedMovies({ movies }) {
   }
   return (
     <div className="mt-10">
-      <h2 className="text-2xl font-semibold mb-4 text-blue-600 dark:text-blue-400">
+      <h2 className="text-2xl font-semibold mb-4 text-blue-600 dark:text-pink-500">
         Recommended Movies
       </h2>
       <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4">
         {movies.map((movie) => (
           <Link href={`/movie/${movie.id}`} key={movie.id}>
-            <div className="bg-white dark:bg-gray-800 rounded-lg shadow hover:shadow-lg transition p-2">
+            <div className="bg-white dark:bg-gray-800 rounded-lg shadow hover:shadow-lg transition p-2 border border-blue-400 dark:border-pink-500">
               <div className="relative w-full h-60">
                 <Image
                   src={`https://image.tmdb.org/t/p/w300${movie.poster_path}`}

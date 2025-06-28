@@ -5,7 +5,7 @@ export default function Navbar() {
     <div
       className="flex justify-center gap-8 px-4 py-3 lg:text-lg 
       bg-neutral-100 dark:bg-[#121212] 
-      border-r-2 border-l-2 border-blue-500 dark:border-blue-400 border-opacity-80 rounded-r-lg rounded-l-lg
+      border-r-2 border-l-2 border-blue-600 dark:border-pink-500 border-opacity-80 rounded-r-lg rounded-l-lg
       text-gray-800 dark:text-white 
       transition-colors duration-300"
     >

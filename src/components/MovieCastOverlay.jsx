@@ -11,7 +11,7 @@ export default function MovieCastOverlay({ cast }) {
     <div className="mt-10">
       <button
         onClick={() => setIsOpen(true)}
-        className="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 transition"
+        className="bg-blue-600 dark:bg-pink-500 text-white px-4 py-2 rounded hover:bg-blue-700 dark:hover:bg-pink-600 transition"
       >
         🎭 Show Cast
       </button>
@@ -25,7 +25,7 @@ export default function MovieCastOverlay({ cast }) {
             >
               ✕
             </button>
-            <h2 className="text-2xl font-semibold mb-4 text-blue-600 dark:text-blue-400">Cast</h2>
+            <h2 className="text-2xl font-semibold mb-4 text-blue-600 dark:text-pink-500">Cast</h2>
             <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4">
               {cast.map((actor) => (
                 <div key={actor.id} className="text-center">

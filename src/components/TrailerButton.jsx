@@ -15,7 +15,7 @@ export default function TrailerButton({ trailerUrl }) {
     <>
       <button
         onClick={() => setShowModal(true)}
-        className="mt-4 px-5 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-xl font-medium transition"
+        className="mt-4 px-5 py-2 bg-blue-600 hover:bg-blue-700 dark:bg-pink-600 dark:hover:bg-pink-700 text-white rounded-xl font-medium transition"
       >
         ▶ Watch Trailer
       </button>

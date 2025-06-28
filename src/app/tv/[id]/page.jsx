@@ -34,11 +34,11 @@ export default async function TVPage({ params }) {
 
   return (
     <div className="max-w-6xl mx-auto px-4 py-10">
-      <h1 className="text-4xl font-bold text-center text-blue-600 mb-6">
+      <h1 className="text-4xl font-bold text-center text-blue-600 dark:text-pink-500 mb-6">
         {show.name}
       </h1>
 
-      <div className="flex flex-col md:flex-row gap-6 shadow-lg rounded-lg overflow-hidden border border-blue-400">
+      <div className="flex flex-col md:flex-row gap-6 shadow-lg rounded-lg overflow-hidden border border-blue-400 dark:border-pink-500">
         <div className="relative w-full md:w-1/3 h-[500px]">
           <Image
             src={`https://image.tmdb.org/t/p/w500${show.poster_path}`}
@@ -62,8 +62,8 @@ export default async function TVPage({ params }) {
         </div>
       </div>
 
-      <div className="mt-6 bg-white dark:bg-gray-900 rounded-lg shadow-md p-6">
-        <h2 className="text-xl font-semibold mb-2 text-blue-600">Overview</h2>
+      <div className="mt-6 bg-white dark:bg-gray-900 rounded-lg shadow-md p-6 border border-blue-400 dark:border-pink-500">
+        <h2 className="text-xl font-semibold mb-2 text-blue-600 dark:text-pink-500">Overview</h2>
         <p className="text-gray-800 dark:text-gray-200">{show.overview}</p>
       </div>
 
@@ -77,7 +77,7 @@ export default async function TVPage({ params }) {
       {/* Similar Shows Section */}
       {similarResults.length > 0 && (
         <div className="mt-10">
-          <h2 className="text-xl font-bold mb-3 text-blue-600">Recommended Shows</h2>
+          <h2 className="text-xl font-bold mb-3 text-blue-600 dark:text-pink-500">Recommended Shows</h2>
           <SimilarShows results={similarResults} />
         </div>
       )}

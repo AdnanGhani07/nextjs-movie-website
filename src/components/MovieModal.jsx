@@ -12,7 +12,7 @@ export default function MovieModal({ trailerKey, title }) {
     <>
       <button
         onClick={() => setIsOpen(true)}
-        className="mt-4 px-5 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition"
+        className="mt-4 px-5 py-2 bg-blue-600 dark:bg-pink-500 text-white rounded-lg hover:bg-blue-700 dark:hover:bg-pink-600 transition"
       >
         ▶ Watch Trailer
       </button>
