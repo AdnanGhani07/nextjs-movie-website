@@ -26,7 +26,7 @@ export const generateHomePageContent = inngest.createFunction(
       "fetch-trending-movies",
       async () => {
         const res = await fetch(
-          `https://api.themoviedb.org/3/movie/top_rated?language=en-US&page=1&api_key=${API_KEY}`,
+          `https://api.themoviedb.org/3/movie/popular?api_key=${API_KEY}&page=1&language=en-US`,
           { cache: "no-store" }
         );
 

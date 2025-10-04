@@ -12,7 +12,7 @@ export default async function Home({ searchParams }) {
 
   try {
     const res = await fetch(
-      `https://api.themoviedb.org/3/movie/top_rated?language=en-US&page=${page}&api_key=${API_KEY}`,
+      `https://api.themoviedb.org/3/movie/popular?api_key=${API_KEY}&page=1&language=en-US`,
       { cache: "no-store" }
     );
 
@@ -65,7 +65,7 @@ export default async function Home({ searchParams }) {
         )}
         <section className="mb-12">
           <h1 className="text-4xl font-bold text-center text-blue-600 dark:text-pink-400 mb-6 tracking-tight">
-            🎬 Top Rated Movies
+            🎬 Trending Movies
           </h1>
           <Results
             results={results}
