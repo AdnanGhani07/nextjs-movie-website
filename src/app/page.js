@@ -28,7 +28,7 @@ export default async function Home({ searchParams }) {
 
     try {
       const homePageContentResults = await fetch(
-        "http://localhost:3000/api/homepagecontent/get",
+        `${process.env.NEXT_PUBLIC_URL}/api/homepagecontent/get`,
         {
           method: "POST",
           headers: {
