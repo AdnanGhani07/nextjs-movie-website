@@ -2,6 +2,7 @@
 import Results from "@/components/Results";
 import AnimeResults from "@/components/AnimeResults";
 import MangaResults from "@/components/MangaResults";
+import parse from "html-react-parser";
 
 const API_KEY = process.env.API_KEY;
 
@@ -23,8 +24,45 @@ export default async function Home({ searchParams }) {
     const results = data.results;
     const totalPages = data.total_pages;
 
+    let homePageContent = null;
+
+    try {
+      const homePageContentResults = await fetch(
+        "http://localhost:3000/api/homepagecontent/get",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          cache: "no-store",
+        }
+      );
+
+      if (!homePageContentResults.ok) {
+        throw new Error(`Failed to fetch data`);
+      }
+
+      const text = await homePageContentResults.text();
+      if (text) {
+        homePageContent = JSON.parse(text)[0] || null;
+      } else {
+        console.log("Empty Response");
+      }
+    } catch (error) {
+      console.error("Fetch failed:", error);
+    }
     return (
       <div className="bg-neutral-100 dark:bg-[#121212] pt-6 px-4 sm:px-8 lg:px-16">
+        {homePageContent && (
+          <div className="text-center mb-10 max-w-6xl mx-auto py-10">
+            <h1 className="text-4xl font-extrabold mb-4 bg-gradient-to-r from-purple-500 via-indigo-500 to-blue-500 bg-clip-text text-transparent">
+              {homePageContent.title}
+            </h1>
+            <div className="sm:text-large p-4 font-semibold text-justify">
+              {parse(homePageContent.description)}
+            </div>
+          </div>
+        )}
         <section className="mb-12">
           <h1 className="text-4xl font-bold text-center text-blue-600 dark:text-pink-400 mb-6 tracking-tight">
             🎬 Top Rated Movies
