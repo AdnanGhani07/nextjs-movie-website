@@ -20,7 +20,7 @@ export const helloWorld = inngest.createFunction(
 
 export const generateHomePageContent = inngest.createFunction(
   { name: "Generate Home Page Content" },
-  { cron: "0 0 * * 0" }, // Run every sunday at midnight
+  { cron: "0 0 * * *" }, // Run every sunday at midnight
   async ({ event, step }) => {
     const trendingMoviesResult = await step.run(
       "fetch-trending-movies",
