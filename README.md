@@ -22,10 +22,13 @@ A movie discovery and details site built with Next.js — designed for browsing,
 
 ## Quickstart — run locally
 1. Clone:
+   
    git clone https://github.com/AdnanGhani07/nextjs-movie-website.git
    
 3. Install dependencies:
+   
    cd nextjs-movie-website
+
    npm install (or yarn / pnpm install)
    
 5. Environment
@@ -39,11 +42,15 @@ A movie discovery and details site built with Next.js — designed for browsing,
      - SVIX_API_KEY (if webhooks are used)
   
 6. Run dev server
+   
    npm run dev
+
    Open http://localhost:3000
    
-7. Build & run production
+8. Build & run production
+   
    npm run build
+
    npm run start
 
 ## Scripts
