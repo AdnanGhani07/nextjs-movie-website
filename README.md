@@ -21,15 +21,14 @@ A movie discovery and details site built with Next.js — designed for browsing,
 - Optional integration with Google generative AI and third-party movie APIs
 
 ## Quickstart — run locally
-1. Clone
+1. Clone:
    git clone https://github.com/AdnanGhani07/nextjs-movie-website.git
    
-3. Install dependencies
+3. Install dependencies:
    cd nextjs-movie-website
-   npm install
-   (or yarn / pnpm install)
+   npm install (or yarn / pnpm install)
    
-4. Environment
+5. Environment
    - Copy example if present:
      cp .env.example .env.local
    - Common env variables you may need:
@@ -39,11 +38,11 @@ A movie discovery and details site built with Next.js — designed for browsing,
      - GOOGLE_API_KEY or credentials required by Google SDK
      - SVIX_API_KEY (if webhooks are used)
   
-5. Run dev server
+6. Run dev server
    npm run dev
    Open http://localhost:3000
    
-6. Build & run production
+7. Build & run production
    npm run build
    npm run start
 
