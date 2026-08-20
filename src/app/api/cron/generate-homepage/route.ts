@@ -45,8 +45,8 @@ export async function GET(request: Request) {
       trendingMovies.slice(0, 10)
     )} and provide a title and description in only the following JSON format
 
-    (and add a link for each movie with this address 'movie/{movie.id}' with html format like this:
-     <a class="bg-gradient-to-r from-purple-500 via-pink-500 to-red-500 bg-clip-text text-transparent hover:underline" href="movie/{movie.id}">Movie Title</a>
+    (and add a link for each movie with this address '/movie/{movie.id}' with html format like this:
+     <a class="text-yellow-400 font-bold hover:text-yellow-300 underline decoration-yellow-500/50 underline-offset-4 transition" href="/movie/{movie.id}">Movie Title</a>
     ):
     {
       "title": "Exciting Movie Title with 50 characters",

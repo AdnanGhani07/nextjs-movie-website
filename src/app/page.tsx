@@ -8,6 +8,7 @@ import { TMDBMovie } from "@/types";
 import { fetchTMDB, FALLBACK_MOVIES } from "@/lib/tmdb";
 import Link from "next/link";
 import { FiTrendingUp, FiTv, FiBookOpen } from "react-icons/fi";
+import { HiSparkles } from "react-icons/hi2";
 
 interface PageProps {
   searchParams: Promise<{ [key: string]: string | string[] | undefined }>;
@@ -58,20 +59,28 @@ export default async function Home({ searchParams }: PageProps) {
   return (
     <div className="space-y-12">
       {/* Dynamic Featured Hero Carousel */}
-      <Hero movie={results[0]} />
+      <Hero movies={results.slice(0, 6)} />
 
       {/* AI Spotlight / Highlights */}
       {homePageContent && (
-        <section className="glass-panel p-6 sm:p-8 rounded-3xl border border-yellow-500/20 relative overflow-hidden">
-          <div className="absolute top-0 right-0 w-96 h-96 bg-yellow-500/5 rounded-full blur-3xl pointer-events-none" />
-          <div className="relative z-10 max-w-4xl">
-            <span className="text-[10px] uppercase font-bold tracking-widest px-3 py-1 rounded-full bg-yellow-500/10 text-yellow-400 border border-yellow-500/20">
-              AI CinePulse Weekly Spotlight
-            </span>
-            <h2 className="text-xl sm:text-2xl font-bold mt-3 text-zinc-100">
+        <section className="relative p-6 sm:p-8 rounded-3xl bg-gradient-to-br from-[#12131a]/95 via-[#0e0f14]/90 to-[#08080a]/95 border border-yellow-500/30 shadow-2xl shadow-yellow-500/5 overflow-hidden group">
+          {/* Ambient Warm Gold Glows */}
+          <div className="absolute -top-12 -right-12 w-80 h-80 bg-gradient-to-br from-yellow-500/15 via-amber-500/5 to-transparent rounded-full blur-3xl pointer-events-none group-hover:scale-110 transition duration-700" />
+          <div className="absolute -bottom-12 -left-12 w-64 h-64 bg-amber-600/10 rounded-full blur-2xl pointer-events-none" />
+
+          <div className="relative z-10 max-w-4xl space-y-3">
+            <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-yellow-500/10 border border-yellow-500/30 shadow-inner">
+              <HiSparkles className="text-yellow-400 text-xs animate-pulse" />
+              <span className="text-[10px] uppercase font-black tracking-widest text-yellow-400">
+                AI CinePulse Weekly Spotlight
+              </span>
+            </div>
+
+            <h2 className="text-xl sm:text-2xl font-black text-white tracking-tight">
               {homePageContent.title}
             </h2>
-            <div className="text-xs sm:text-sm text-zinc-300 mt-2 leading-relaxed prose prose-invert max-w-none">
+
+            <div className="text-xs sm:text-sm text-zinc-300 leading-relaxed max-w-none [&_a]:!text-yellow-400 [&_a]:font-bold [&_a]:!bg-none [&_a]:!bg-clip-border [&_a]:!text-fill-current [&_a]:underline [&_a]:decoration-yellow-500/50 [&_a]:underline-offset-4 hover:[&_a]:!text-yellow-300 transition">
               {parse(homePageContent.description || "")}
             </div>
           </div>
