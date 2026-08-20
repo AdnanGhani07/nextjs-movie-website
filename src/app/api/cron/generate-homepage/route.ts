@@ -39,7 +39,7 @@ export async function GET(request: Request) {
 
     // 3. Generate AI summary using Gemini
     const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY || "");
-    const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
+    const model = genAI.getGenerativeModel({ model: "gemini-2.5-flash" });
 
     const prompt = `Analyze these movies: ${JSON.stringify(
       trendingMovies.slice(0, 10)
