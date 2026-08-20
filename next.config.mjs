@@ -1,12 +1,3 @@
-// /** @type {import('next').NextConfig} */
-// const nextConfig = {};
-
-// export default nextConfig;
-
-/** @type {import('next').NextConfig} */
-// next.config.js
-
-/** @type {import('next').NextConfig} */
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   images: {
@@ -14,16 +5,37 @@ const nextConfig = {
       {
         protocol: 'https',
         hostname: 'image.tmdb.org',
-        pathname: '/t/**',
       },
       {
         protocol: 'https',
         hostname: 'cdn.myanimelist.net',
+      },
+      {
+        protocol: 'https',
+        hostname: 'images.unsplash.com',
+      },
+      {
+        protocol: 'https',
+        hostname: 'artworks.thetvdb.com',
+      },
+      {
+        protocol: 'https',
+        hostname: 'm.media-amazon.com',
+      },
+      {
+        protocol: 'https',
+        hostname: 's4.anilist.co',
+      },
+      {
+        protocol: 'https',
+        hostname: 'media.kitsu.io',
+      },
+      {
+        protocol: 'https',
+        hostname: 'static.tvmaze.com',
       },
     ],
   },
 };
 
 export default nextConfig;
-
-
