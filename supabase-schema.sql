@@ -107,7 +107,104 @@ select
 where not exists (select 1 from public.home_page_content);
 
 -- ==============================================================================
--- 4. Storage Bucket Setup (Avatars & Media)
+-- 4. Watchlist Table
+-- ==============================================================================
+create table if not exists public.watchlist (
+  id uuid primary key default gen_random_uuid(),
+  user_id uuid references public.profiles(id) on delete cascade not null,
+  media_id text not null,
+  media_type text not null,
+  title text,
+  poster_path text,
+  added_at timestamptz default now(),
+  unique(user_id, media_id, media_type)
+);
+
+alter table public.watchlist enable row level security;
+
+create policy "Users can view their own watchlist"
+  on public.watchlist for select
+  using (auth.uid() = user_id);
+
+create policy "Users can insert into their own watchlist"
+  on public.watchlist for insert
+  with check (auth.uid() = user_id);
+
+create policy "Users can update their own watchlist"
+  on public.watchlist for update
+  using (auth.uid() = user_id);
+
+create policy "Users can delete from their own watchlist"
+  on public.watchlist for delete
+  using (auth.uid() = user_id);
+
+-- ==============================================================================
+-- 5. Watched History Table
+-- ==============================================================================
+create table if not exists public.watched_history (
+  id uuid primary key default gen_random_uuid(),
+  user_id uuid references public.profiles(id) on delete cascade not null,
+  media_id text not null,
+  media_type text not null,
+  title text,
+  poster_path text,
+  watched_at timestamptz default now(),
+  unique(user_id, media_id, media_type)
+);
+
+alter table public.watched_history enable row level security;
+
+create policy "Users can view their own watched history"
+  on public.watched_history for select
+  using (auth.uid() = user_id);
+
+create policy "Users can insert into their own watched history"
+  on public.watched_history for insert
+  with check (auth.uid() = user_id);
+
+create policy "Users can update their own watched history"
+  on public.watched_history for update
+  using (auth.uid() = user_id);
+
+create policy "Users can delete from their own watched history"
+  on public.watched_history for delete
+  using (auth.uid() = user_id);
+
+-- ==============================================================================
+-- 6. Ratings Table
+-- ==============================================================================
+create table if not exists public.ratings (
+  id uuid primary key default gen_random_uuid(),
+  user_id uuid references public.profiles(id) on delete cascade not null,
+  media_id text not null,
+  media_type text not null,
+  rating numeric not null,
+  title text,
+  poster_path text,
+  rated_at timestamptz default now(),
+  unique(user_id, media_id, media_type)
+);
+
+alter table public.ratings enable row level security;
+
+create policy "Users can view their own ratings"
+  on public.ratings for select
+  using (auth.uid() = user_id);
+
+create policy "Users can insert into their own ratings"
+  on public.ratings for insert
+  with check (auth.uid() = user_id);
+
+create policy "Users can update their own ratings"
+  on public.ratings for update
+  using (auth.uid() = user_id);
+
+create policy "Users can delete from their own ratings"
+  on public.ratings for delete
+  using (auth.uid() = user_id);
+
+-- ==============================================================================
+-- 7. Storage Bucket Setup (Avatars & Media)
 -- ==============================================================================
 insert into storage.buckets (id, name, public)
 values ('avatars', 'avatars', true)
@@ -120,3 +217,4 @@ create policy "Avatar images are publicly accessible"
 create policy "Users can upload their own avatar"
   on storage.objects for insert
   with check (bucket_id = 'avatars' and auth.uid()::text = (storage.foldername(name))[1]);
+
