@@ -5,7 +5,7 @@ import { NextResponse } from "next/server";
 export const dynamic = "force-dynamic";
 export const maxDuration = 60; // 60 seconds max execution for serverless
 
-const API_KEY = process.env.API_KEY;
+const TMDB_API_KEY = process.env.TMDB_API_KEY;
 
 export async function GET(request: Request) {
   try {
@@ -26,7 +26,7 @@ export async function GET(request: Request) {
 
     // 2. Fetch Trending Movies from TMDB
     const res = await fetch(
-      `https://api.themoviedb.org/3/movie/popular?api_key=${API_KEY}&page=1&language=en-US`,
+      `https://api.themoviedb.org/3/movie/popular?api_key=${TMDB_API_KEY}&page=1&language=en-US`,
       { cache: "no-store" }
     );
 

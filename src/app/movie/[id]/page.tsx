@@ -12,8 +12,6 @@ import { FiStar, FiCalendar, FiClock, FiGlobe, FiAward } from "react-icons/fi";
 
 import BackButton from "@/components/BackButton";
 
-const API_KEY = process.env.API_KEY;
-
 interface PageProps {
   params: Promise<{ id: string }>;
 }

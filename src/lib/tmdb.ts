@@ -5,7 +5,7 @@ import { TMDBMovie } from "@/types";
 // e.g. TMDB_BASE_URL=https://api.themoviedb.org/3 (default)
 // e.g. TMDB_BASE_URL=https://tmdb-proxy.vercel.app/3 or Cloudflare Workers proxy
 const TMDB_BASE_URL = process.env.TMDB_BASE_URL || "https://api.themoviedb.org/3";
-const API_KEY = process.env.API_KEY;
+const TMDB_API_KEY = process.env.TMDB_API_KEY;
 
 export async function fetchTMDB<T = any>(
   endpoint: string,
@@ -13,7 +13,7 @@ export async function fetchTMDB<T = any>(
   init?: RequestInit
 ): Promise<T | null> {
   const query = new URLSearchParams({
-    api_key: API_KEY || "",
+    api_key: TMDB_API_KEY || "",
     language: "en-US",
     ...Object.fromEntries(
       Object.entries(params).map(([k, v]) => [k, String(v)])

@@ -22,6 +22,10 @@ import {
   FiStar,
   FiLogOut,
   FiEdit2,
+  FiCopy,
+  FiCheck,
+  FiCpu,
+  FiKey,
 } from "react-icons/fi";
 import { User } from "@supabase/supabase-js";
 
@@ -109,6 +113,11 @@ export default function ProfilePage() {
   const [history, setHistory] = useState<MediaEntry[]>([]);
   const [ratings, setRatings] = useState<MediaEntry[]>([]);
 
+  const [accessToken, setAccessToken] = useState<string>("");
+  const [copiedToken, setCopiedToken] = useState(false);
+  const [copiedCursor, setCopiedCursor] = useState(false);
+  const [copiedClaude, setCopiedClaude] = useState(false);
+
   const [activeTab, setActiveTab] = useState<"watchlist" | "history" | "ratings">("watchlist");
   const [saveError, setSaveError] = useState<string | null>(null);
   const [saveSuccess, setSaveSuccess] = useState(false);
@@ -121,6 +130,11 @@ export default function ProfilePage() {
         return;
       }
       setUser(user);
+
+      const { data: { session } } = await supabase.auth.getSession();
+      if (session?.access_token) {
+        setAccessToken(session.access_token);
+      }
 
       const [profile, wl, hist, rats] = await Promise.all([
         getProfile(),
@@ -171,6 +185,49 @@ export default function ProfilePage() {
     await supabase.auth.signOut();
     router.push("/");
     router.refresh();
+  };
+
+  const handleCopyToken = () => {
+    if (!accessToken) return;
+    navigator.clipboard.writeText(accessToken);
+    setCopiedToken(true);
+    setTimeout(() => setCopiedToken(false), 2500);
+  };
+
+  const handleCopyCursorConfig = () => {
+    const origin = typeof window !== "undefined" ? window.location.origin : (process.env.NEXT_PUBLIC_URL || "");
+    const config = {
+      name: "CinePulse",
+      type: "sse",
+      url: `${origin}/api/mcp`,
+      headers: {
+        Authorization: `Bearer ${accessToken}`,
+      },
+    };
+    navigator.clipboard.writeText(JSON.stringify(config, null, 2));
+    setCopiedCursor(true);
+    setTimeout(() => setCopiedCursor(false), 2500);
+  };
+
+  const handleCopyClaudeConfig = () => {
+    const origin = typeof window !== "undefined" ? window.location.origin : (process.env.NEXT_PUBLIC_URL || "");
+    const config = {
+      mcpServers: {
+        cinepulse: {
+          command: "npx",
+          args: [
+            "-y",
+            "mcp-remote-client",
+            `${origin}/api/mcp`,
+            "--header",
+            `Authorization: Bearer ${accessToken}`,
+          ],
+        },
+      },
+    };
+    navigator.clipboard.writeText(JSON.stringify(config, null, 2));
+    setCopiedClaude(true);
+    setTimeout(() => setCopiedClaude(false), 2500);
   };
 
   const initials = `${firstName.charAt(0)}${lastName.charAt(0)}`.toUpperCase() || user?.email?.charAt(0).toUpperCase() || "U";
@@ -291,6 +348,66 @@ export default function ProfilePage() {
             )}
           </div>
         </div>
+      </div>
+
+      {/* AI & MCP Integration Card */}
+      <div className="glass-panel rounded-3xl border border-yellow-500/20 p-6 bg-gradient-to-r from-zinc-900/90 via-zinc-900/60 to-yellow-500/5 shadow-xl relative overflow-hidden">
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+          <div className="space-y-1">
+            <div className="flex items-center gap-2">
+              <div className="w-7 h-7 rounded-lg bg-yellow-400/10 border border-yellow-400/30 flex items-center justify-center text-yellow-400">
+                <FiCpu className="text-sm" />
+              </div>
+              <h2 className="text-sm sm:text-base font-bold text-white flex items-center gap-2">
+                AI & Model Context Protocol (MCP)
+                <span className="text-[10px] font-bold px-2 py-0.5 rounded-full bg-yellow-400 text-black">
+                  API Connected
+                </span>
+              </h2>
+            </div>
+            <p className="text-xs text-zinc-400 max-w-xl">
+              Connect <span className="text-zinc-300 font-semibold">Claude Desktop</span>, <span className="text-zinc-300 font-semibold">Cursor</span>, or custom AI agents to query your personal watchlist, mark watched titles, and fetch media recommendations.
+            </p>
+          </div>
+
+          <div className="flex flex-wrap items-center gap-2">
+            <button
+              onClick={handleCopyToken}
+              className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-yellow-400 hover:bg-yellow-300 text-black text-xs font-black transition active:scale-95 shadow-md shadow-yellow-500/20"
+              title="Copy your personal Bearer token"
+            >
+              {copiedToken ? <FiCheck className="text-green-950 font-bold" /> : <FiKey />}
+              {copiedToken ? "Token Copied!" : "Copy Token"}
+            </button>
+            <button
+              onClick={handleCopyCursorConfig}
+              className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-zinc-800 hover:bg-zinc-700 text-zinc-200 text-xs font-semibold border border-white/10 hover:border-white/20 transition active:scale-95"
+              title="Copy JSON configuration for Cursor IDE"
+            >
+              {copiedCursor ? <FiCheck className="text-green-400" /> : <FiCopy />}
+              {copiedCursor ? "Copied!" : "Cursor Config"}
+            </button>
+            <button
+              onClick={handleCopyClaudeConfig}
+              className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-zinc-800 hover:bg-zinc-700 text-zinc-200 text-xs font-semibold border border-white/10 hover:border-white/20 transition active:scale-95"
+              title="Copy JSON configuration for Claude Desktop"
+            >
+              {copiedClaude ? <FiCheck className="text-green-400" /> : <FiCopy />}
+              {copiedClaude ? "Copied!" : "Claude Config"}
+            </button>
+          </div>
+        </div>
+
+        {accessToken && (
+          <div className="mt-4 pt-4 border-t border-white/5 flex items-center justify-between gap-2 text-[11px] text-zinc-500 font-mono">
+            <span className="truncate max-w-[280px] sm:max-w-md">
+              Bearer {accessToken.slice(0, 16)}••••••••••••••••••••••••••••••••{accessToken.slice(-8)}
+            </span>
+            <span className="text-[10px] text-zinc-400 shrink-0 font-sans">
+              Scoped with Row-Level Security (RLS)
+            </span>
+          </div>
+        )}
       </div>
 
       {/* Stats Row */}

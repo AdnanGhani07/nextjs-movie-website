@@ -13,7 +13,7 @@ jobs:
 
     env:
       # Build-time dummy environment variables so Next.js build validation passes
-      API_KEY: ${{ secrets.API_KEY || 'dummy_tmdb_api_key' }}
+      TMDB_API_KEY: ${{ secrets.TMDB_API_KEY || 'dummy_tmdb_api_key' }}
       NEXT_PUBLIC_SUPABASE_URL: ${{ secrets.NEXT_PUBLIC_SUPABASE_URL || 'https://placeholder.supabase.co' }}
       NEXT_PUBLIC_SUPABASE_ANON_KEY: ${{ secrets.NEXT_PUBLIC_SUPABASE_ANON_KEY || 'placeholder_anon_key' }}
       SUPABASE_SERVICE_ROLE_KEY: ${{ secrets.SUPABASE_SERVICE_ROLE_KEY || 'placeholder_service_role_key' }}

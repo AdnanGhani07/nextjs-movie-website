@@ -33,6 +33,7 @@ A high-performance full-stack entertainment aggregator built with **Next.js 15 (
   - [Database Setup (Supabase)](#database-setup-supabase)
   - [Running the Application](#running-the-application)
 - [AI Homepage & Cron Automation](#-ai-homepage--cron-automation)
+- [Model Context Protocol (MCP) Server](#-model-context-protocol-mcp-server)
 - [Available Scripts](#-available-scripts)
 - [Deployment](#-deployment)
 - [Community & Contributing](#-community--contributing)
@@ -57,9 +58,11 @@ With built-in **Supabase** backend support, users can register, manage profile a
   - **Anime & Manga**: Deep catalog exploration with AniList GraphQL and Jikan (MAL) integration, including character rosters and voice actors.
 - **🤖 Automated AI Weekly Spotlight**:
   - Uses **Google Gemini 2.5 Flash** via serverless Cron (`/api/cron/generate-homepage`) to analyze trending releases and write engaging editorial summaries with interactive links.
+- **⚡ Model Context Protocol (MCP) Server**:
+  - Built-in in-app MCP server at `/api/mcp` allowing **Cursor**, **Claude Desktop**, and autonomous agents to search entertainment catalogs, read AI spotlights, and safely mutate personal watchlists and ratings under PostgreSQL RLS.
 - **🔐 Secure Authentication & User Profiles**:
   - Full-stack session management via `@supabase/ssr`.
-  - Custom user profiles with first/last names, email, and avatar uploads backed by Supabase Storage.
+  - Custom user profiles with first/last names, email, avatar uploads, and a **1-click AI & MCP Access Token** generator.
 - **📌 Personal Media Dashboard**:
   - **Watchlist**: Save movies, anime, and shows to watch later.
   - **Watched History**: Keep track of everything you have completed.
@@ -84,6 +87,7 @@ With built-in **Supabase** backend support, users can register, manage profile a
 | **Framework** | [Next.js 15](https://nextjs.org/) | App Router, Server Components (RSC), Edge caching, API routes |
 | **UI Library** | [React 19](https://react.dev/) | Core UI rendering with React 19 features |
 | **Language** | [TypeScript 5](https://www.typescriptlang.org/) | End-to-end type safety |
+| **AI Protocol** | [Model Context Protocol (MCP)](https://modelcontextprotocol.io/) | In-app MCP server (`@modelcontextprotocol/sdk`) for Claude & Cursor |
 | **Styling** | [Tailwind CSS 3.4](https://tailwindcss.com/) | Utility-first styling with custom dark midnight tokens |
 | **Database & Auth** | [Supabase](https://supabase.com/) | PostgreSQL, Auth SSR, Storage buckets, Row-Level Security (RLS) |
 | **Artificial Intelligence** | [Google Gemini 2.5 Flash](https://aistudio.google.com/) | Automated media synthesis & editorial spotlight generation |
@@ -112,10 +116,11 @@ nextjs-movie-website/
 │   │   ├── about/                # About CinePulse page
 │   │   ├── api/
 │   │   │   ├── cron/generate-homepage/ # Automated Gemini AI cron job
-│   │   │   └── homepagecontent/get/    # Endpoint to retrieve cached spotlight
+│   │   │   ├── homepagecontent/get/    # Endpoint to retrieve cached spotlight
+│   │   │   └── mcp/                    # In-app MCP server endpoint (GET for SSE, POST for JSON-RPC)
 │   │   ├── auth/callback/        # Supabase OAuth/Auth exchange handler
 │   │   ├── movie/[id]/           # Movie detail page with cast & recommendations
-│   │   ├── profile/              # User profile, watchlist, history & ratings
+│   │   ├── profile/              # User profile, watchlist, history, ratings & AI MCP token card
 │   │   ├── sign-in/              # Authentication sign-in form
 │   │   ├── sign-up/              # Authentication registration form
 │   │   ├── tv/[id]/              # TV show detail page
@@ -133,14 +138,21 @@ nextjs-movie-website/
 │   │   ├── WatchlistButton.tsx   # Add/remove watchlist state button
 │   │   └── WatchedButton.tsx     # Toggle watched history state button
 │   ├── lib/                      # Utilities, API clients, and helpers
-│   │   ├── supabase/             # Supabase browser, server, and admin clients
+│   │   ├── supabase/             # Supabase browser, server, and middleware clients
 │   │   ├── fetchAnilist.ts       # AniList GraphQL queries
 │   │   ├── jikan.ts              # Jikan REST API client with retry logic
 │   │   ├── omdb.ts               # OMDb API client for ratings & IMDb links
 │   │   ├── tmdb.ts               # TMDB API client with fallback datasets
 │   │   ├── tvmaze.ts             # TVmaze API client & conversion adapters
 │   │   └── userActions.ts        # Supabase database actions (watchlist, ratings, profile)
-│   ├── middleware.ts             # Supabase session refresh middleware
+│   ├── mcp/                      # Model Context Protocol (MCP) server architecture
+│   │   ├── auth.ts               # Bearer JWT extraction & scoped Supabase client factory
+│   │   ├── server.ts             # Master McpServer instance & capability registration
+│   │   ├── types.ts              # Zod input schemas & normalized media models
+│   │   ├── prompts/              # Reusable agent workflows (plan_watch_night)
+│   │   ├── resources/            # Contextual readable resources (cinepulse://spotlight)
+│   │   └── tools/                # Discovery (TMDB/AniList) & Personal Library (RLS) tools
+│   ├── middleware.ts             # Supabase session refresh & /api/mcp bypass middleware
 │   └── types/                    # Shared TypeScript interfaces & types
 ├── .env.local.example            # Environment variables template
 ├── LICENSE                       # MIT License
@@ -158,7 +170,7 @@ nextjs-movie-website/
 
 ### Prerequisites
 
-- **Node.js**: `v18.18+` or `v20+` (LTS recommended)
+- **Node.js**: `v20+` or `v22+` (LTS recommended)
 - **Package Manager**: `npm`, `yarn`, or `pnpm`
 - **Git**
 
@@ -187,7 +199,7 @@ Configure the following environment variables:
 
 | Variable | Required | Description | Where to get |
 | :--- | :---: | :--- | :--- |
-| `API_KEY` | **Yes** | TMDB API v3 Key | [The Movie Database](https://www.themoviedb.org/documentation/api) |
+| `TMDB_API_KEY` | **Yes** | TMDB API v3 Key | [The Movie Database](https://www.themoviedb.org/documentation/api) |
 | `NEXT_PUBLIC_SUPABASE_URL` | **Yes** | Supabase Project URL | [Supabase Dashboard](https://supabase.com) (`Settings > API`) |
 | `NEXT_PUBLIC_SUPABASE_ANON_KEY` | **Yes** | Supabase Public Anon Key | [Supabase Dashboard](https://supabase.com) (`Settings > API`) |
 | `SUPABASE_SERVICE_ROLE_KEY` | Optional | Supabase Admin Secret Key (for Cron) | [Supabase Dashboard](https://supabase.com) (`Settings > API`) |
@@ -237,6 +249,88 @@ CinePulse features an automated editorial spotlight powered by **Google Gemini 2
 > [!TIP]
 > You can manually test the cron endpoint locally by navigating to:
 > `http://localhost:3000/api/cron/generate-homepage`
+
+---
+
+## 🤖 Model Context Protocol (MCP) Server
+
+CinePulse features a built-in **Model Context Protocol (MCP)** server mounted directly at `/api/mcp`. This allows modern AI developer environments (like **Cursor**, **Windsurf**, and **Claude Desktop**) as well as autonomous AI agents to connect directly to CinePulse's entertainment catalog and personal library.
+
+### Available Tools, Resources & Prompts
+
+| Type | Name | Auth Required | Description |
+| :--- | :--- | :--- | :--- |
+| **Tool** | `search_media` | No (Public) | Search across movies, TV series, anime, and manga. Returns token-trimmed metadata. |
+| **Tool** | `get_media_details` | No (Public) | Fetch detailed synopses, cast rosters, ratings, and genre tags. |
+| **Tool** | `get_trending` | No (Public) | Retrieve trending movies, TV shows, or currently airing anime. |
+| **Tool** | `get_my_library` | **Yes (Bearer JWT)** | Inspect user's personal watchlist, watched history, ratings, and favorites. |
+| **Tool** | `update_watchlist` | **Yes (Bearer JWT)** | Add or remove titles from the user's personal watchlist. |
+| **Tool** | `mark_watched` | **Yes (Bearer JWT)** | Mark or unmark titles in watched history. |
+| **Tool** | `rate_title` | **Yes (Bearer JWT)** | Submit or update 1–10 star ratings. |
+| **Resource** | `cinepulse://spotlight` | No (Public) | Reads the weekly Gemini AI spotlight from the database. |
+| **Prompt** | `plan_watch_night` | Optional | Guided agent workflow: checks user library, finds unwatched titles, and suggests watchlist updates. |
+
+---
+
+### How to Get Your CinePulse Access Token
+
+To allow an AI assistant to manage your personal watchlist or ratings without exposing master database keys:
+
+1. Sign in to your CinePulse account (either locally at `http://localhost:3000` or on production at `https://cinepulse-seven.vercel.app`).
+2. Navigate to your **[Profile Page](/profile)**.
+3. In the **AI & Model Context Protocol (MCP)** section, click **Copy Token** (or click **Cursor Config** / **Claude Config** to copy pre-formatted JSON).
+4. Paste the token or configuration directly into your AI client.
+
+> [!NOTE]
+> All personal tool calls execute under strict **PostgreSQL Row-Level Security (RLS)** via your user JWT (`auth.uid() = user_id`). The server never uses service role keys, ensuring your data remains completely isolated and secure.
+
+---
+
+### Connecting AI Clients
+
+#### 1. Cursor IDE (Local & Production)
+In Cursor, go to **Settings** -> **Features** -> **MCP Servers** -> **+ Add New MCP Server**:
+
+- **Name**: `CinePulse`
+- **Type**: `SSE`
+- **URL**: `http://localhost:3000/api/mcp` *(for local development)* or `https://<YOUR-APP-DOMAIN>/api/mcp` *(for production)*
+- **Headers**:
+  ```json
+  {
+    "Authorization": "Bearer <YOUR_CINEPULSE_TOKEN>"
+  }
+  ```
+
+#### 2. Claude Desktop
+Add CinePulse to your `claude_desktop_config.json`:
+
+```json
+{
+  "mcpServers": {
+    "cinepulse": {
+      "command": "npx",
+      "args": [
+        "-y",
+        "mcp-remote-client",
+        "http://localhost:3000/api/mcp",
+        "--header",
+        "Authorization: Bearer <YOUR_CINEPULSE_TOKEN>"
+      ]
+    }
+  }
+}
+```
+*(For remote or production deployments, replace `http://localhost:3000/api/mcp` with your deployment URL, e.g. `https://<YOUR-APP-DOMAIN>/api/mcp`)*.
+
+#### 3. Visual Testing with MCP Inspector
+You can test the MCP server in a visual GUI right in your terminal:
+```bash
+# Start your local Next.js server
+npm run dev
+
+# In another terminal window, launch the inspector
+npx @modelcontextprotocol/inspector http://localhost:3000/api/mcp
+```
 
 ---
 

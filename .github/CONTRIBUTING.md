@@ -84,7 +84,7 @@ cp .env.local.example .env.local
 ```
 
 Fill in the required API keys:
-- `API_KEY`: Your TMDB API v3 key (free from [The Movie Database](https://www.themoviedb.org/documentation/api))
+- `TMDB_API_KEY`: Your TMDB API v3 key (free from [The Movie Database](https://www.themoviedb.org/documentation/api))
 - `NEXT_PUBLIC_SUPABASE_URL` & `NEXT_PUBLIC_SUPABASE_ANON_KEY`: From your [Supabase](https://supabase.com) project
 - `SUPABASE_SERVICE_ROLE_KEY`: Service role secret for admin cron operations
 - `GEMINI_API_KEY`: Google Gemini AI API key from [Google AI Studio](https://aistudio.google.com/)
